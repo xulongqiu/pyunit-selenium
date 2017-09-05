@@ -16,6 +16,8 @@ class BaseLineNormalCase(unittest.TestCase):
         super(BaseLineNormalCase, self).__init__(methodname)
         self.api_data = api_data
         self.web_driver = web_driver
+        self.case_name = ''
+        self.case_id = ''
         self.log = BaseLineLogger.get_log()
 
     # cases	     description        page_url	    actions	                        checkpoint	                               active	others
@@ -30,16 +32,19 @@ class BaseLineNormalCase(unittest.TestCase):
         if not isinstance(self.api_data[2], str):
             raise TypeError
 
+        self.case_id = self.api_data[0]
+        self.case_name = self.api_data[1]
         self.web_driver.open_page(self.api_data[2])
 
+        self.log.info('%s[%s]======================TEST START=======================', *(self.case_id, self.case_name))
         pass
 
     def test_normal(self):
         actions = self.api_data[3]
         if not isinstance(actions, dict):
             actions = None
-        print("case_id:" + self.api_data[0])
-        print("case_desc:" + self.api_data[1])
+        print('case_id:%-14s' % self.case_id)
+        print("case_desc:%-30s" % self.case_name)
         # actions: fill txtBox, click button etc.
         # {"txt":{"xpath":{"123456":"admin"}, "id":{"01234":"password"}}, "btn":{"id":"12345678"}}
         if actions and len(actions) > 0:
@@ -100,6 +105,7 @@ class BaseLineNormalCase(unittest.TestCase):
     def tearDown(self):
         # time.sleep(2)
         # self.web_driver.close_page()
+        self.log.info('%s[%s]======================TEST END======================\n\n', *(self.case_id, self.case_name))
         pass
 
 

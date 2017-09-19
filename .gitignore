@@ -1,3 +1,4 @@
 *.pyc
 .idea/*
 report/*.html
+logger/result/2*

@@ -24,7 +24,7 @@ class BaseLineWebDriver:
     def close_page(self, page=None):
         self.driver.close()
 
-    def close_all_page(self):
+    def exit(self):
         self.driver.quit()
 
     def get_text_by_xpath(self, xpath):
